@@ -8,6 +8,13 @@ allowed-tools:
 
 Perform a comprehensive health check of the Docker environment.
 
+For a remote host, or every host in the preferences file, run the commands through each
+host's transport (`shared/running-on-hosts.md`). For the full audit (engine updates,
+Watchtower, autostart, storage, deployment sources) use the `fleet-audit` skill instead.
+
+0. **Host load**: `cat /proc/loadavg; nproc; free -h`. Flag a 15-min load above the core
+   count, available memory under 10 %, or swap nearly full.
+
 ## Tasks
 
 1. **Container Status**: Run `docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"` and analyze:

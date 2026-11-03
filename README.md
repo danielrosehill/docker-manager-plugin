@@ -28,6 +28,38 @@ This plugin turns Claude Code into a capable Docker administration assistant. It
 | `migration-planner` | Plan and execute container migrations between environments |
 | `resource-optimizer` | Analyse CPU, memory, and storage usage and recommend optimisations |
 
+## Audit skills and preferences (0.2.0)
+
+Read-only skills that compare each Docker host against how you *meant* it to be set up:
+
+| Skill | Checks |
+|-------|--------|
+| `fleet-audit` | Everything below in one pass per host, report saved to your data dir |
+| `audit-engine` | Engine, containerd and Compose versions; pending updates; apt source matching the OS release; log rotation |
+| `audit-watchtower` | Installed, fork and version, schedule, which containers it covers or skips, update history and failures |
+| `audit-autostart` | Daemon enabled at boot, restart policy per container, containers that won't survive a reboot, systemd/cron starters |
+| `audit-storage` | Which containers have persistent storage and which don't, where every volume lives, mounts outside your volume root |
+| `audit-deployments` | Each stack traced to its compose dir, under your deployment root, in git with a remote, no drift; hand-started and ID-only containers |
+| `preferences` | Record your conventions and rules ("frigate never autostarts") |
+
+All facts come from `scripts/docker-audit.sh`, a read-only script that runs on the host
+locally, over SSH, or through any remote-shell tool your agent has. Nothing is changed
+without a yes; fixes are suggested with exact commands.
+
+### Your preferences live outside the plugin
+
+`preferences.md` (hosts, volume roots, deployment roots, autostart and Watchtower rules,
+cleanup limits, plus free-text notes) is stored in your user data dir, so updates to the
+plugin never overwrite it and you can keep it in your own private repo:
+
+1. `$DOCKER_MANAGER_HOME`, if set
+2. `$CLAUDE_USER_DATA/docker-manager`, if that variable is set
+3. `~/.claude-user-data/docker-manager` (default)
+
+`scripts/paths.sh` shows which one is in use; `scripts/paths.sh init` creates it from
+`seeds/preferences.example.md`. Without one, audits judge against the example defaults
+and say so. Saved audit reports go to `reports/` in the same dir.
+
 ## Installation
 
 ```bash
