@@ -1,0 +1,17 @@
+# One entry per stack; bin/up.sh brings enabled stacks up in tier order.
+# tier: 0 = infrastructure others depend on (databases, broker, storage, updater, monitoring)
+#       1 = services and apps
+# enabled: false = kept in the tree but not brought up
+stacks:
+  - name: example
+    path: example                 # submodule path, relative to this repo
+    compose: docker-compose.yml   # relative to path
+    repo: git@github.com:you/example-deployment.git
+    tier: 1
+    enabled: true
+
+# Stacks still deployed from repos outside this tree (target: bring each in as a submodule).
+external: []
+
+# Containers running with no compose project at all (started by hand). Each needs a stack.
+unmanaged: []

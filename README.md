@@ -28,7 +28,7 @@ This plugin turns Claude Code into a capable Docker administration assistant. It
 | `migration-planner` | Plan and execute container migrations between environments |
 | `resource-optimizer` | Analyse CPU, memory, and storage usage and recommend optimisations |
 
-## Audit skills and preferences (0.2.0)
+## Audit, remediation and preferences (0.3.0)
 
 Read-only skills that compare each Docker host against how you *meant* it to be set up:
 
@@ -41,6 +41,16 @@ Read-only skills that compare each Docker host against how you *meant* it to be 
 | `audit-storage` | Which containers have persistent storage and which don't, where every volume lives, mounts outside your volume root |
 | `audit-deployments` | Each stack traced to its compose dir, under your deployment root, in git with a remote, no drift; hand-started and ID-only containers |
 | `preferences` | Record your conventions and rules ("frigate never autostarts") |
+
+Remediation and upkeep (each change needs your yes):
+
+| Skill | Does |
+|-------|------|
+| `deployment-master` | The intended shape: one repo per stack, all submodules of a master repo at the deployment root, with `stacks.yaml` and `bin/up.sh` / `bin/status.sh` (templates in `templates/deployment-master/`) |
+| `adopt-deployment` | Turns a loosely brought-up stack (no repo, in `/root`, or `docker run`) into its own repo (asks public/private), moves it under the root and adds it to the master |
+| `engine-auto-update` | Docker's apt repo in unattended-upgrades, proven with a dry run; covers the silent blockers |
+| `watchtower-remediate` | Withdrawn images, the unmaintained containrrr image, exclusions, schedule |
+| `swap-relief` | Who holds swap, safe swapoff/swapon, lasting fixes |
 
 All facts come from `scripts/docker-audit.sh`, a read-only script that runs on the host
 locally, over SSH, or through any remote-shell tool your agent has. Nothing is changed

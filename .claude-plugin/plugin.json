@@ -1,6 +1,6 @@
 {
   "name": "docker-manager",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Slash commands and subagents for managing Docker containers, Compose stacks, volumes, networks, and multi-environment deployments.",
   "author": {
     "name": "Daniel Rosehill"

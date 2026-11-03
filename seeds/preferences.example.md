@@ -28,6 +28,11 @@ volume_root_exceptions: []        # source paths allowed elsewhere (sockets, /et
 # roots and, if deployment_must_be_git, be inside a git repo with a remote.
 deployment_roots: [/srv/stacks]
 deployment_must_be_git: true
+# Master deployment repo: one repo per stack, all submodules of this one (skill deployment-master).
+deployment_master:
+  path: null                      # e.g. /srv/stacks; the master repo is checked out here
+  repo: null                      # e.g. git@github.com:you/myhost-deployments.git
+  new_repo_visibility: private    # default for repos created by adopt-deployment (asked each time anyway)
 deployment_must_have_remote: true
 allow_local_images: false         # images built on the host (no registry) are flagged unless true
 

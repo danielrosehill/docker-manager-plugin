@@ -32,3 +32,6 @@ host as extra commands (same transport).
 
 A table per host: stack · working dir · repo (remote or "none") · state
 (clean / N changed / missing) · containers. Then the flags. Skip `ignore_containers`.
+If a master deployment repo is configured (`deployment_master`), also run its
+`bin/status.sh` and flag stacks missing from `stacks.yaml`. Fixes: `adopt-deployment`
+for loose stacks, `deployment-master` to create or update the master repo.
